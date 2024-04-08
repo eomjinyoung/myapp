@@ -29,7 +29,7 @@
 <form action="update" data-th-action="@{update}" data-th-object="${board}"
       enctype='multipart/form-data'
       method='post'>
-  <input type="hidden" id="filenames" name="filenames" data-th-value="${filenames}" value="filename1,filename2">
+  <input type="hidden" id="filenames" name="filenames">
   <div>
     번호: <input data-th-value="*{no}" name='no' readonly type='text' value="100">
   </div>
@@ -52,8 +52,8 @@
 <div data-th-replace="footer :: footer">꼬리말</div>
 
 <script>
-  let filenames = $('#filenames').val().split(',');
-  console.log(filenames);
+  let filenames = [];
+
   $(document).ready(function() {
 
     $('#summernote').summernote({

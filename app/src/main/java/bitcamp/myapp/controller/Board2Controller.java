@@ -103,12 +103,7 @@ public class Board2Controller {
       throw new Exception("번호가 유효하지 않습니다.");
     }
 
-    ArrayList<String> filenames = new ArrayList<>();
-    for (AttachedFile attachedFile : board.getFileList()) {
-      filenames.add(attachedFile.getFilePath());
-    }
     model.addAttribute("board", board);
-    model.addAttribute("filenames", String.join(",", filenames));
   }
 
   @PostMapping("update")
@@ -130,8 +125,17 @@ public class Board2Controller {
       throw new Exception("권한이 없습니다.");
     }
 
-    ArrayList<AttachedFile> files = new ArrayList<>();
+    ArrayList<String> filenameList = new ArrayList<>();
     for (String filename : filenames.split(",")) {
+      filenameList.add(filename);
+    }
+    for (AttachedFile attachedFile : board.getFileList()) {
+      filenameList.add(attachedFile.getFilePath());
+    }
+
+
+    ArrayList<AttachedFile> files = new ArrayList<>();
+    for (String filename : filenameList) {
       if (board.getContent().indexOf(filename) != -1) {
         files.add(AttachedFile.builder().filePath(filename).build());
         continue;
