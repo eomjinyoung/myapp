@@ -36,10 +36,6 @@ dependencies {
     // 애노테이션으로 지정된 SpringBoot의 설정 처리를 도와주는 라이브러리
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    // SpringSecurity 관련 라이브러리
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
     // AWS S3 API 라이브러리
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.688'
 
