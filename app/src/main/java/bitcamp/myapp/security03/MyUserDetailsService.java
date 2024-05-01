@@ -1,4 +1,4 @@
-package bitcamp.myapp.security;
+package bitcamp.myapp.security03;
 
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.vo.Member;
@@ -33,7 +33,7 @@ public class MyUserDetailsService implements UserDetailsService {
     // 그 사용자 정보를 UserDetails 객체에 담아서 리턴한다.
     // 그러면 Spring Security는 리턴된 UserDetails의 username/password 와
     // 클라이언트가 보낸 username/password를 비교하여 로그인 처리를 수행한다.
-    return User.builder()
+    return User.withDefaultPasswordEncoder()
         .username(member.getEmail())
         .password(member.getPassword())
         .roles("USER")

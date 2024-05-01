@@ -1,4 +1,4 @@
-package bitcamp.myapp.security;
+package bitcamp.myapp.security04;
 
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.vo.Member;
