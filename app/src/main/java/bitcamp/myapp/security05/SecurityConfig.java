@@ -27,7 +27,7 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests((authorize) -> authorize
-            .mvcMatchers("/member/form", "/member/add", "/img/**").permitAll()
+            .mvcMatchers("/member/form", "/member/add", "/img/**", "/home", "/").permitAll()
             .anyRequest().authenticated()
         )
         .httpBasic(Customizer.withDefaults())
