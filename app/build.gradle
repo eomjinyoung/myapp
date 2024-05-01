@@ -42,6 +42,10 @@ dependencies {
     // log4j 2.x 라이브러리
     //implementation 'org.apache.logging.log4j:log4j-core:2.23.1'
 
+    // Spring Security
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 }
