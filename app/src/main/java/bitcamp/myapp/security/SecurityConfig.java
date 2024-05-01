@@ -35,7 +35,6 @@ public class SecurityConfig {
             .mvcMatchers("/member/form", "/member/add", "/img/**", "/home", "/").permitAll()
             .anyRequest().authenticated()
         )
-        .httpBasic(Customizer.withDefaults())
         .formLogin(formLoginConfigurer -> {
             formLoginConfigurer
                 .loginPage("/auth/form") // 로그인 폼을 제공하는 URL

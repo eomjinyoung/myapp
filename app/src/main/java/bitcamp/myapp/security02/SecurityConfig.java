@@ -31,7 +31,6 @@ public class SecurityConfig {
         .authorizeHttpRequests((authorize) -> authorize
             .anyRequest().authenticated()
         )
-        .httpBasic(Customizer.withDefaults())
         .formLogin(new Customizer<FormLoginConfigurer<HttpSecurity>>() {
           @Override
           public void customize(FormLoginConfigurer<HttpSecurity> formLoginConfigurer) {

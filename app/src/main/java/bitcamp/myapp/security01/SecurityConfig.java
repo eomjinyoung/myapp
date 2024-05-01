@@ -32,11 +32,7 @@ public class SecurityConfig {
     //       즉 인증받지 않은 사용자는 모든 요청이 거부된다.
 //    http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
 
-    // 2) 어떤 HTTP 요청에 대해 시큐리티 필터를 적용할 지 설정한다.
-    //    => Spring Security의 기본 설정을 그대로 사용한다.
-//    http.httpBasic(Customizer.withDefaults());
-
-    // 3) 로그인 폼을 지정한다.
+    // 2) 로그인 폼을 지정한다.
     //    => Spring Security가 만들어주는 로그인 폼을 그대로 사용한다.
 //    http.formLogin(Customizer.withDefaults());
 
@@ -45,7 +41,6 @@ public class SecurityConfig {
         .authorizeHttpRequests((authorize) -> authorize
             .anyRequest().authenticated()
         )
-        .httpBasic(Customizer.withDefaults())
         .formLogin(Customizer.withDefaults());
 
     // HttpSecurity 객체에 설정한대로 동작할 수 있는 필터를 구성한다.
