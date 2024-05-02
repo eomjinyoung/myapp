@@ -40,6 +40,7 @@ public class SecurityConfig {
               .successForwardUrl("/auth/loginSuccess") // 로그인 성공 후 포워딩 할 URL
               .permitAll() // 모든 권한 부여
         )
+        //.logout(Customizer.withDefaults())
         .build();
   }
 
