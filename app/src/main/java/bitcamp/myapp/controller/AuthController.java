@@ -61,4 +61,10 @@ public class AuthController {
     session.invalidate();
     return "redirect:/index.html";
   }
+
+  @RequestMapping("loginSuccess")
+  public String loginSuccess(HttpSession session) throws Exception {
+    log.debug("로그인 성공!!!");
+    return "redirect:/index.html";
+  }
 }
