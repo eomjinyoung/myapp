@@ -40,8 +40,9 @@ public class SecurityConfig {
         //.csrf().csrfTokenRepository(sessionCsrfRepository).and()
         //.csrf().csrfTokenRepository(cookieCsrfRepository).and()
         .authorizeHttpRequests(authorize -> authorize
-            .mvcMatchers("/member/form", "/member/add", "/img/**", "/home", "/", "*/list", "*/view", "/logout").permitAll()
-            .anyRequest().authenticated()
+            .mvcMatchers("/app/**").authenticated()
+            .mvcMatchers("/app/member/add", "/app/*/list", "/app/*/view").permitAll()
+            .anyRequest().permitAll()
         )
         .formLogin(formLoginConfigurer ->
           formLoginConfigurer
