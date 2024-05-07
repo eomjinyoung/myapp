@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>비트캠프 데브옵스 5기</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <script src="/context.js"></script>
+    <script src="../js/init-page.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header id="header">머리말</header>
+
+      <h1>로그인</h1>
+
+      <form id="login-form">
+        <div>이메일: <input name="email" type="text" value="hong@test.com" /></div>
+        <div>암호: <input name="password" type="password" /></div>
+        <button id="login-btn" type="button">로그인</button>
+        <input name="saveEmail" type="checkbox" /> 이메일 저장
+      </form>
+
+      <footer id="footer">꼬리말</footer>
+    </div>
+    <script>
+      document.querySelector("#login-btn").onclick = () => {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+              headerEl.innerHTML = xhr.responseText;
+            } else {
+              alert("header.html을 가져오는데 실패했습니다!");
+            }
+          }
+        };
+        xhr.open("GET", `${rootPath}/header.html`, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        var messageBody = "name=" + window.encodeURIComponent("홍길동") + "&age=20";
+        xhr.send(messageBody);
+      };
+    </script>
+  </body>
+</html>

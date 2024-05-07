@@ -1,0 +1,21 @@
+#header {
+  height: 80px;
+}
+
+#header img {
+  width: 184px;
+  height: 60px;
+}
+
+#footer {
+  height: 60px;
+  background-color: gray;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.container {
+  width: 800px;
+  margin: 0 auto;
+}
