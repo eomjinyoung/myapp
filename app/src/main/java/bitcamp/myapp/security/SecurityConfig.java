@@ -14,9 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
-import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
-import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -30,19 +27,15 @@ public class SecurityConfig {
 
   // Spring Security를 처리할 필터 체인을 준비한다.
   @Bean
-  public SecurityFilterChain securityFilterChain(
-      HttpSecurity http
-      //,HttpSessionCsrfTokenRepository sessionCsrfRepository
-      //,CookieCsrfTokenRepository cookieCsrfRepository
-      ) throws Exception {
-
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http
-        //.csrf().csrfTokenRepository(sessionCsrfRepository).and()
-        //.csrf().csrfTokenRepository(cookieCsrfRepository).and()
+        //.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
+        .csrf().csrfTokenRepository(sessionCsrfRepository()).and()
         .authorizeHttpRequests(authorize -> authorize
-            .mvcMatchers("/html/**").permitAll()
-            .mvcMatchers("/member/form", "/member/add", "/home", "/", "*/list", "*/view").permitAll()
-            .anyRequest().permitAll()
+            .mvcMatchers("/img/**").permitAll()
+            .mvcMatchers("/member/form", "/member/add", "/home", "/", "/auth/csrf").permitAll()
+            .antMatchers("/**/list", "/**/view", "/**/*.html", "/**/*.css", "/**/*.js", "/**/*.ico").permitAll()
+            .anyRequest().authenticated()
         )
         .formLogin(formLoginConfigurer ->
           formLoginConfigurer
@@ -51,6 +44,7 @@ public class SecurityConfig {
               .usernameParameter("email") // 로그인 수행할 때 사용할 사용자 아이디 또는 이메일(principal) 파라미터 명
               .passwordParameter("password") // 로그인 수행할 때 사용할 사용자 암호(credential) 파라미터 명
               .successForwardUrl("/auth/loginSuccess") // 로그인 성공 후 포워딩 할 URL
+              .failureForwardUrl("/auth/loginFailure") // 로그인 실패 후 포워딩 할 URL
               .permitAll() // 모든 권한 부여
         )
         .logout(Customizer.withDefaults())
@@ -60,7 +54,6 @@ public class SecurityConfig {
         // - 서버에서 받은 CSRF 토큰을 요청 헤더에 넣어야 한다.
         .build();
   }
-
 
   //@Bean
   HttpSessionCsrfTokenRepository sessionCsrfRepository() {
@@ -83,11 +76,19 @@ public class SecurityConfig {
   CookieCsrfTokenRepository cookieCsrfRepository() {
     CookieCsrfTokenRepository csrfRepository = new CookieCsrfTokenRepository();
 
-    csrfRepository.setCookieHttpOnly(false); // 기본 값: true
-//    csrfRepository.setHeaderName("X-CSRF-TOKEN"); // 기본 값: X-CSRF-TOKEN
+    // 자바스크립트로 Document.cookie 객체에 들어 있는 토큰 값을 꺼낼 수 있게 한다.
+    csrfRepository.setCookieHttpOnly(false);
+
+    // HTTP 헤더에서 토큰을 저장할 때 사용할 이름
+    // HttpSessionCsrfTokenRepository 의 설정과 같게 한다.
+    // 기본 값은 다른 이름 이다.
+    csrfRepository.setHeaderName("X-CSRF-TOKEN"); // 기본 값: X-XSRF-TOKEN
+
+    // URL 파라미터로 토큰을 전송할 때 사용할 이름
 //    csrfRepository.setParameterName("_csrf"); // 기본 값: _csrf
-//    csrfRepository.setCookieName("XSRF-TOKEN"); // 기본 값: XSRF-TOKEN
-//    csrfRepository.setCookiePath(request.getContextPath()); // 기본값: request.getContextPath()
+
+    // 세션에 CSRF 토큰을 저장할 때 사용할 이름
+//    csrfRepository.setCookiePath("/"); // 기본 값: request.getContextPath();
 
     return csrfRepository;
   }
@@ -99,7 +100,6 @@ public class SecurityConfig {
     // => DB에서 사용자 정보를 가져올 것이다.
     return new MyUserDetailsService(memberService);
   }
-
   // 로그인 폼에서 입력한 암호와 DB에서 꺼낸 암호가 같은지 비교하는 객체를 준비한다.
   // => Spring Security는 이 객체를 사용하여 암호를 비교한다.
   @Bean

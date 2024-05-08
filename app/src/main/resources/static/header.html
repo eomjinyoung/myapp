@@ -1,0 +1,17 @@
+<a data-th-href="@{/}" href="/">
+  <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" />
+</a>
+<a data-th-href="@{/assignment/list}" href="assignment/list">과제</a>
+<a data-th-href="@{/board/list(category=1)}" href="board/list">게시글</a>
+<a data-th-href="@{/board2/list}" href="board2/list">게시글2</a>
+<a data-th-href="@{/member/list}" href="member/list">회원</a>
+<a data-th-href="@{/board/list(category=2)}" href="board/list2">가입인사</a>
+
+<div class="user-info">
+  <span id="username">홍길동</span>
+  <a id="logout-btn" href="" onclick="logout(event);">로그아웃</a>
+</div>
+
+<a id="login-btn" href="/auth/form.html">로그인</a>
+
+<a data-th-href="@{/about}" href="about">소개</a>
