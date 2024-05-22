@@ -12,7 +12,7 @@ document.querySelector("#login-btn").onclick = () => {
           const response = JSON.parse(xhr.responseText);
           if (response.status == "success") {
             console.debug("로그인 성공!");
-            location.href = "/home.html";
+            location.href = "/";
           } else {
             alert(response.error);
           }
